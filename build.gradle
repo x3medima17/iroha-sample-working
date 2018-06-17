@@ -1,0 +1,79 @@
+import java.nio.file.Paths
+
+buildscript {
+    ext.kotlin_version = '1.2.41'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+group 'iroha'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'kotlin'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+    jcenter()
+
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile 'com.google.protobuf:protobuf-java:3.5.0'
+    compile 'io.grpc:grpc-netty:1.8.0'
+    compile 'io.grpc:grpc-protobuf:1.8.0'
+    compile 'io.grpc:grpc-stub:1.8.0'
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.21"
+
+    compile 'io.github.microutils:kotlin-logging:1.5.4'
+
+    def iroha_bindings_dir = projectDir.toString().concat("/iroha_bindings")
+    compile fileTree(dir: iroha_bindings_dir, include: '*.jar')
+
+    compile 'org.slf4j:slf4j-simple:1.7.25'
+
+    compile "org.junit.jupiter:junit-jupiter-api:5.2.0"
+
+    testCompile('org.junit.jupiter:junit-jupiter-api:5.2.0')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+
+
+}
+
+
+
+test {
+    useJUnitPlatform()
+    systemProperty 'java.library.path', projectDir.toString()
+    println "Runtime Iroha library path:${systemProperties}"
+    environment "LD_LIBRARY_PATH", projectDir.toString()
+}
+
+sourceSets {
+    test {
+        java {
+            srcDirs += "src/test/kotlin"
+        }
+    }
+}
+
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+

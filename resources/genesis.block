@@ -1,0 +1,55 @@
+{
+  "payload": {
+    "transactions": [
+      {
+        "payload": {
+          "commands": [
+            {
+              "addPeer": {
+                "peer": {
+                  "address": "localhost:10001",
+                  "peerKey": "Xl+GhX1Ljn4yU1yc8sWxz5xEyOUAfvICPtEfVyfgvHk="
+                }
+              }
+            },
+            {
+              "createRole": {
+                "roleName": "admin",
+                "permissions": [
+                  "can_get_roles",
+                  "can_add_asset_qty",
+                ]
+              }
+            },
+            {
+              "createRole": {
+                "roleName": "user",
+                "permissions": [
+                  "can_transfer"
+                ]
+              }
+            },
+            {
+              "createDomain": {
+                "domainId": "main",
+                "defaultRole" : "user"
+              }
+            },
+            {
+              "createAccount":{
+                "accountName":"admin",
+                "domainId":"main",
+                "mainPubkey":"7rW5Xiknq2FHwc6lB/u0ZSSSlrz0s46K8DfZFj1mCWo="
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "txNumber": 1,
+    "height": "1",
+    "prevBlockHash": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  }
+}
+
+
